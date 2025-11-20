@@ -1,0 +1,9 @@
+package com.almadetortuga.back_AlmaDeTortuga.repository;
+
+import com.almadetortuga.back_AlmaDeTortuga.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+}
