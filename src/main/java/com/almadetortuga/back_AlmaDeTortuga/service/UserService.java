@@ -16,9 +16,17 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    // Lista de usuarios
     public List<User> getUsers(){
         return userRepository.findAll();
     }
 
+    // Crear un usuario
+    public User createUser(User newUser){
+        return userRepository.save(newUser);
+    }
 
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

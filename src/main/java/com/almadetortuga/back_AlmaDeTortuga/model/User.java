@@ -2,7 +2,7 @@ package com.almadetortuga.back_AlmaDeTortuga.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -13,35 +13,31 @@ public class User {
     @Column(name = "id_user")
     private Long id_user;
 
-    @Column(nullable = false, unique = true, length = 25)
+    @Column(nullable = false, length = 25)
     private String name;
 
-    @Column(nullable = false, unique = true, length = 25)
-    private String last_name;
+    @Column(nullable = false, length = 25)
+    private String lastname;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true, length = 70)
+    @Column(nullable = false, length = 70)
     private String password;
 
-    @Column(nullable = false, unique = true, columnDefinition = "DATETIME")
-    private LocalDateTime registration;
-
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRol rol;
 
     public User() {
     }
 
-    public User(Long id_user, String name, String last_name, String email, String password, LocalDateTime registration, UserRol rol) {
+    public User(Long id_user, String name, String lastname, String email, String password, UserRol rol) {
         this.id_user = id_user;
         this.name = name;
-        this.last_name = last_name;
+        this.lastname = lastname;
         this.email = email;
         this.password = password;
-        this.registration = registration;
         this.rol = rol;
     }
 
@@ -61,12 +57,12 @@ public class User {
         this.name = name;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLast_name(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getEmail() {
@@ -85,14 +81,6 @@ public class User {
         this.password = password;
     }
 
-    public LocalDateTime getRegistration() {
-        return registration;
-    }
-
-    public void setRegistration(LocalDateTime registration) {
-        this.registration = registration;
-    }
-
     public UserRol getRol() {
         return rol;
     }
@@ -104,12 +92,12 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof User user)) return false;
-        return Objects.equals(id_user, user.id_user) && Objects.equals(name, user.name) && Objects.equals(last_name, user.last_name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(registration, user.registration) && rol == user.rol;
+        return Objects.equals(id_user, user.id_user) && Objects.equals(name, user.name) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(password, user.password)  && rol == user.rol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_user, name, last_name, email, password, registration, rol);
+        return Objects.hash(id_user, name, lastname, email, password, rol);
     }
 
     @Override
@@ -117,10 +105,9 @@ public class User {
         return "User{" +
                 "id_user=" + id_user +
                 ", name='" + name + '\'' +
-                ", last_name='" + last_name + '\'' +
+                ", last_name='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", registration=" + registration +
                 ", rol=" + rol +
                 '}';
     }
