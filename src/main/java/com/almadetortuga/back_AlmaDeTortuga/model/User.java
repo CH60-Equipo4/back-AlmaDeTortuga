@@ -3,6 +3,8 @@ package com.almadetortuga.back_AlmaDeTortuga.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,6 +30,14 @@ public class User {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRol rol;
+
+    // -------- Relación de User a Cart 1:N ----------
+    @OneToMany(
+            mappedBy = "user", // Indica el campo en la clase Cart que posee la FK.
+            cascade = CascadeType.ALL, // Las operaciones (guardar, eliminar) en User se propagan a Cart.
+            orphanRemoval = true // Si eliminas un Cart de la lista, se borra de la DB.
+    )
+    private List<Cart> carts = new ArrayList<>();
 
     public User() {
     }
