@@ -1,5 +1,6 @@
 package com.almadetortuga.back_AlmaDeTortuga.service;
 
+import com.almadetortuga.back_AlmaDeTortuga.exceptions.UserNotFoundException;
 import com.almadetortuga.back_AlmaDeTortuga.model.User;
 import com.almadetortuga.back_AlmaDeTortuga.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +31,26 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    // Actualizar usuario
+    public User updateUser(User user, Long id){
+        return userRepository.findById(id)
+                .map(userMap -> {
+                    userMap.setName(user.getName());
+                    userMap.setLast_name(user.getLastname());
+                    userMap.setEmail(user.getEmail());
+                    userMap.setRol(user.getRol());
+                    return userRepository.save(userMap);
+                })
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+    }
+
+    // Eliminar usuario
+    public void deleteUser(Long id){
+        if( userRepository.existsById(id) ){
+            userRepository.deleteById(id);
+        }else{
+            throw new UserNotFoundException(id);
+        }
+    }
 }
