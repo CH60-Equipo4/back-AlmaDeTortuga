@@ -2,6 +2,8 @@ package com.almadetortuga.back_AlmaDeTortuga.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +16,24 @@ public class Cart {
 
     @Column(nullable = false)
     private StatusCart statusCart;
+
+    // -- Relacion Cart to User N:1
+    @ManyToOne(fetch = FetchType.LAZY) // Carga perezosa: no carga el User hasta que se necesita.
+    @JoinColumn(
+            name = "user_id", // Nombre de la columna de la clave foránea en la tabla 'cart'.
+            nullable = false // Un carrito siempre debe estar asociado a un usuario.
+    )
+
+
+    private User user;
+
+    // -- Relación Cart to Product N:1
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "id_producto",  // nombre de la FK en la tabla cart
+            nullable = false
+    )
+    private Product product;
 
     public Cart() {
     }
@@ -37,6 +57,14 @@ public class Cart {
 
     public void setStatusCart(StatusCart statusCart) {
         this.statusCart = statusCart;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Override
