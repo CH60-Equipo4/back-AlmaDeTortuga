@@ -2,6 +2,8 @@ package com.almadetortuga.back_AlmaDeTortuga.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "payment")
@@ -25,6 +27,14 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatusPayment status;
+
+    // -- Relacion Payment to Order 1:N
+    @OneToMany(
+            mappedBy = "payment", // Indica el campo en la clase Cart que posee la FK.
+            cascade = CascadeType.ALL, // Las operaciones (guardar, eliminar) en User se propagan a Cart.
+            orphanRemoval = true // Si eliminas un Cart de la lista, se borra de la DB.
+    )
+    private List<Order> orders = new ArrayList<>();
 
     public Payment() {}
 

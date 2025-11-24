@@ -23,6 +23,31 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    // -- Relacion Order to Delivery N:1
+    @ManyToOne(fetch = FetchType.LAZY) // Carga perezosa: no carga el Delivery hasta que se necesita.
+    @JoinColumn(
+            name = "delivery_id", // Nombre de la columna de la clave foránea en la tabla 'order'.
+            nullable = false // Una orden siempre debe estar asociada a un envio.
+    )
+    private Delivery delivery;
+
+    // -- Relacion Order to Payment N:1
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "payment_id",
+            nullable = false
+    )
+    private Payment payment;
+
+    // -- Relacion Order to User N:1
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "id_user",
+            nullable = false
+    )
+    private User user;
+
+
     // CONSTRUCTOR PARA SPRING
     public Order (){
 

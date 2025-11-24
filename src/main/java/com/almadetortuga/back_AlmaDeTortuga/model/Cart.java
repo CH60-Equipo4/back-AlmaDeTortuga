@@ -23,8 +23,6 @@ public class Cart {
             name = "user_id", // Nombre de la columna de la clave foránea en la tabla 'cart'.
             nullable = false // Un carrito siempre debe estar asociado a un usuario.
     )
-
-
     private User user;
 
     // -- Relación Cart to Product N:1
