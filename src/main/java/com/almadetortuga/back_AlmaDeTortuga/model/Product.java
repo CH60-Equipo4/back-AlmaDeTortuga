@@ -15,87 +15,89 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_producto")
-    private Long id_producto;
+    @Column(name = "id_product")
+    private Long id_product;
 
-    @Column(name = "nombre_producto", nullable = false, length = 150)
-    private String nombreProducto;
+    @Column(name = "name", nullable = false, length = 150)
+    private String name;
 
     // text(1000) en DB se suele mapear con length grande o columnDefinition="TEXT"
-    @Column(name = "descripcion_producto", nullable = false, length = 1000)
-    private String descripcionProducto;
+    @Column(name = "description", nullable = false, length = 1000)
+    private String description;
 
     // DECIMAL(10,2) siempre debe ser BigDecimal en Java
-    @Column(name = "precio", nullable = false, precision = 10, scale = 2)
-    private BigDecimal precio;
+    @Column(name = "price", nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 
     @Column(name = "STOCK", nullable = false)
     private Integer stock;
 
-    @Column(name = "url_imagen_producto", nullable = false, length = 250)
-    private String urlImagenProducto;
+    @Column(name = "urlProductImage", nullable = false, length = 250)
+    private String urlProductImage;
 
-    /* -------- Relación de Product a Cart 1:N ----------
+    // -------- Relación de Product a Cart 1:N ----------
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cart> carts = new ArrayList<>(); */
+    private List<Cart> carts = new ArrayList<>();
 
     // -------- Relación de Product a Pedido N:M ----------
 
-  /*  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-            name = "producto_has_pedido",
-            joinColumns = @JoinColumn(name = "id_producto"),
-            inverseJoinColumns = @JoinColumn(name = "id_pedido")
+            name = "product_has_order",
+            joinColumns = @JoinColumn(name = "id_product"),
+            inverseJoinColumns = @JoinColumn(name = "id_order")
     )
-    private Set<Pedido> pedidos = new HashSet<>(); */
+    private Set<Order> orders = new HashSet<>();
 
     // -------- Constructores ---------- //
 
     public Product() {
     }
 
-    public Product(Long id_producto, String nombreProducto, String descripcionProducto, BigDecimal precio, Integer stock, String urlImagenProducto) {
-        this.id_producto = id_producto;
-        this.nombreProducto = nombreProducto;
-        this.descripcionProducto = descripcionProducto;
-        this.precio = precio;
+    public Product(Long id_product, String name, String description, BigDecimal price, Integer stock, String urlProductImage, List<Cart> carts, Set<Order> orders) {
+        this.id_product = id_product;
+        this.name = name;
+        this.description = description;
+        this.price = price;
         this.stock = stock;
-        this.urlImagenProducto = urlImagenProducto;
+        this.urlProductImage = urlProductImage;
+        this.carts = carts;
+        this.orders = orders;
     }
 
     // -------- Getters y Setters ----------
 
-    public Long getId_producto() {
-        return id_producto;
+    public Long getId_product() {
+        return id_product;
     }
 
-    public void setId_producto(Long id_producto) {
-        this.id_producto = id_producto;
+    public void setId_product(Long id_product) {
+        this.id_product = id_product;
     }
 
-    public String getNombreProducto() {
-        return nombreProducto;
+    public String getName() {
+        return name;
     }
 
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescripcionProducto() {
-        return descripcionProducto;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripcionProducto(String descripcionProducto) {
-        this.descripcionProducto = descripcionProducto;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public BigDecimal getPrecio() {
-        return precio;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public Integer getStock() {
@@ -106,15 +108,15 @@ public class Product {
         this.stock = stock;
     }
 
-    public String getUrlImagenProducto() {
-        return urlImagenProducto;
+    public String getUrlProductImage() {
+        return urlProductImage;
     }
 
-    public void setUrlImagenProducto(String urlImagenProducto) {
-        this.urlImagenProducto = urlImagenProducto;
+    public void setUrlProductImage(String urlProductImage) {
+        this.urlProductImage = urlProductImage;
     }
 
-   /* public List<Cart> getCarts() {
+    public List<Cart> getCarts() {
         return carts;
     }
 
@@ -122,44 +124,40 @@ public class Product {
         this.carts = carts;
     }
 
-   /* public Set<Pedido> getPedidos() {
-        return pedidos;
+    public Set<Order> getOrders() {
+        return orders;
     }
 
-    public void setPedidos(Set<Pedido> pedidos) {
-        this.pedidos = pedidos;
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
-    */
 
     // -------- Overrides (Equals, HashCode, ToString) ----------
 
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (!(o instanceof Product product)) return false;
-        return Objects.equals(id_producto, product.id_producto) &&
-                Objects.equals(nombreProducto, product.nombreProducto) &&
-                Objects.equals(descripcionProducto, product.descripcionProducto) &&
-                Objects.equals(precio, product.precio) &&
-                Objects.equals(stock, product.stock) &&
-                Objects.equals(urlImagenProducto, product.urlImagenProducto);
+        return Objects.equals(id_product, product.id_product) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(price, product.price) && Objects.equals(stock, product.stock) && Objects.equals(urlProductImage, product.urlProductImage) && Objects.equals(carts, product.carts) && Objects.equals(orders, product.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_producto, nombreProducto, descripcionProducto, precio, stock, urlImagenProducto);
+        return Objects.hash(id_product, name, description, price, stock, urlProductImage, carts, orders);
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "id_producto=" + id_producto +
-                ", nombreProducto='" + nombreProducto + '\'' +
-                ", descripcionProducto='" + descripcionProducto + '\'' +
-                ", precio=" + precio +
+                "id_product=" + id_product +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
                 ", stock=" + stock +
-                ", urlImagenProducto='" + urlImagenProducto + '\'' +
+                ", urlProductImage='" + urlProductImage + '\'' +
+                ", carts=" + carts +
+                ", orders=" + orders +
                 '}';
     }
 }

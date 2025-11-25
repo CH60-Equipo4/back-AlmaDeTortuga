@@ -37,6 +37,15 @@ public class User {
     )
     private List<Cart> carts = new ArrayList<>();
 
+    // -- Relacion User to Order 1:N
+    @OneToMany(
+            mappedBy = "user", // Hace referencia al campo 'private User user;' en la clase Order.
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Order> orders = new ArrayList<>();
+
+
     public User() {
     }
 
