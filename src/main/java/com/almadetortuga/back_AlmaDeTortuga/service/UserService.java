@@ -27,30 +27,36 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    // Actualizar usuario
-    public User updateUser(User user, Long id){
-        return userRepository.findById(id)
-                .map(userMap -> {
-                    userMap.setName(user.getName());
-                    userMap.setLast_name(user.getLastname());
-                    userMap.setEmail(user.getEmail());
-                    userMap.setRol(user.getRol());
-                    return userRepository.save(userMap);
-                })
-                .orElseThrow(() -> new UserNotFoundException(id));
-
-    }
-
-    // Eliminar usuario
-    public void deleteUser(Long id){
-        if( userRepository.existsById(id) ){
+    // Método para eliminar usuarios id
+    public void deleteUser(Long id) {
+        if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
-        }else{
+        } else {
             throw new UserNotFoundException(id);
         }
     }
+
+    // Método para actualizar a todo un usuario mediante su id
+    public User updateUser(User user, Long id) {
+        return userRepository.findById(id)
+                .map(userMap -> {
+                    userMap.setName(user.getName());
+                    userMap.setEmail(user.getEmail());
+                    userMap.setPassword(user.getPassword());
+                    return userRepository.save(userMap);
+                })
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+
+
 }

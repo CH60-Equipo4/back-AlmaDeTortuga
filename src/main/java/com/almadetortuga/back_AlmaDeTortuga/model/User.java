@@ -1,8 +1,6 @@
 package com.almadetortuga.back_AlmaDeTortuga.model;
 
 import jakarta.persistence.*;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +36,15 @@ public class User {
             orphanRemoval = true // Si eliminas un Cart de la lista, se borra de la DB.
     )
     private List<Cart> carts = new ArrayList<>();
+
+    // -- Relacion User to Order 1:N
+    @OneToMany(
+            mappedBy = "user", // Hace referencia al campo 'private User user;' en la clase Order.
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Order> orders = new ArrayList<>();
+
 
     public User() {
     }
