@@ -2,6 +2,8 @@ package com.almadetortuga.back_AlmaDeTortuga.model; // O el paquete donde decida
 
 public enum Category {
 
-    CLASICAS, PERSONALIZADA, COLECCION
+    CLASSIC,
+    COLLECTION,
+    CUSTOM
 
 }

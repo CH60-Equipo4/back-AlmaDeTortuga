@@ -10,32 +10,37 @@ import java.util.Set;
 
 @Entity
 @Table(name = "product")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_producto") // Se mantiene el nombre de la columna en la DB
+    @Column(name = "id_product") // Se mantiene el nombre de la columna en la DB
     private Long idProduct;       // CORREGIDO: id_product -> idProduct (CamelCase)
 
-    @Column(name = "nombre_producto")
+    @Column(name = "name_product")
     private String name;
 
-    @Column(name = "descripcion_producto")
+    @Column(name = "description_product")
     private String description;
 
-    @Column(name = "precio")
+    @Column(name = "price")
     private BigDecimal price;
 
     @Column(name = "stock")
     private Integer stock;
 
-    @Column(name = "url_imagen_producto")
+    @Column(name = "url_image_product")
     private String urlProductImage;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    private Category category;
 
     // -------- Relación de Product a Cart N:M ----------
 
     @ManyToMany(mappedBy = "products")
-    private List<Cart> carts = new ArrayList<>(); // Es buena práctica inicializar la lista
+    private List<Cart> carts = new ArrayList<>();
 
     // -------- Relación de Product a Pedido (Order) N:M ----------
 
@@ -52,25 +57,24 @@ public class Product {
     public Product() {
     }
 
-    // Constructor actualizado con camelCase
-    public Product(Long idProduct, String name, String description, BigDecimal price, Integer stock, String urlProductImage, List<Cart> carts, Set<Order> orders) {
+    // Constructor
+    public Product(Long idProduct, String name, String description, BigDecimal price, Integer stock, String urlProductImage, Category category) {
         this.idProduct = idProduct;
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
         this.urlProductImage = urlProductImage;
-        this.carts = carts;
-        this.orders = orders;
+        this.category = category;
     }
 
     // -------- Getters y Setters ----------
+
 
     public Long getIdProduct() {
         return idProduct;
     }
 
-    // Setter corregido: setId_product -> setIdProduct
     public void setIdProduct(Long idProduct) {
         this.idProduct = idProduct;
     }
@@ -115,41 +119,12 @@ public class Product {
         this.urlProductImage = urlProductImage;
     }
 
-    public List<Cart> getCarts() {
-        return carts;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCarts(List<Cart> carts) {
-        this.carts = carts;
-    }
-
-    public Set<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
-    }
-
-    // -------- Overrides (Equals, HashCode, ToString) ----------
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Product product)) return false;
-        // Se usan las nuevas variables en camelCase
-        return Objects.equals(idProduct, product.idProduct) &&
-                Objects.equals(name, product.name) &&
-                Objects.equals(description, product.description) &&
-                Objects.equals(price, product.price) &&
-                Objects.equals(stock, product.stock) &&
-                Objects.equals(urlProductImage, product.urlProductImage) &&
-                Objects.equals(carts, product.carts) &&
-                Objects.equals(orders, product.orders);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idProduct, name, description, price, stock, urlProductImage, carts, orders);
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -161,8 +136,18 @@ public class Product {
                 ", price=" + price +
                 ", stock=" + stock +
                 ", urlProductImage='" + urlProductImage + '\'' +
-                ", carts=" + carts +
-                ", orders=" + orders +
+                ", category=" + category +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Product product)) return false;
+        return Objects.equals(idProduct, product.idProduct) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(price, product.price) && Objects.equals(stock, product.stock) && Objects.equals(urlProductImage, product.urlProductImage) && category == product.category;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idProduct, name, description, price, stock, urlProductImage, category);
     }
 }
