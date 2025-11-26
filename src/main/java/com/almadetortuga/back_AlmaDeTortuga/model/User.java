@@ -10,8 +10,8 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_user")
-    private Long id_user;
+    @Column(name = "id_user") // Mapeo explícito para la DB
+    private Long idUser; // Java puro en camelCase
 
     @Column(nullable = false, length = 25)
     private String name;
@@ -31,26 +31,26 @@ public class User {
 
     // -------- Relación de User a Cart 1:N ----------
     @OneToMany(
-            mappedBy = "user", // Indica el campo en la clase Cart que posee la FK.
-            cascade = CascadeType.ALL, // Las operaciones (guardar, eliminar) en User se propagan a Cart.
-            orphanRemoval = true // Si eliminas un Cart de la lista, se borra de la DB.
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
     private List<Cart> carts = new ArrayList<>();
 
     // -- Relacion User to Order 1:N
     @OneToMany(
-            mappedBy = "user", // Hace referencia al campo 'private User user;' en la clase Order.
+            mappedBy = "user",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<Order> orders = new ArrayList<>();
 
-
     public User() {
     }
 
-    public User(Long id_user, String name, String lastname, String email, String password, UserRol rol) {
-        this.id_user = id_user;
+    // Constructor corregido a camelCase
+    public User(Long idUser, String name, String lastname, String email, String password, UserRol rol) {
+        this.idUser = idUser;
         this.name = name;
         this.lastname = lastname;
         this.email = email;
@@ -58,12 +58,13 @@ public class User {
         this.rol = rol;
     }
 
-    public Long getId_user() {
-        return id_user;
+    // Getters y Setters corregidos a camelCase
+    public Long getIdUser() {
+        return idUser;
     }
 
-    public void setId_user(Long id_user) {
-        this.id_user = id_user;
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {
@@ -78,7 +79,7 @@ public class User {
         return lastname;
     }
 
-    public void setLast_name(String lastname) {
+    public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
@@ -109,20 +110,21 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof User user)) return false;
-        return Objects.equals(id_user, user.id_user) && Objects.equals(name, user.name) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(password, user.password)  && rol == user.rol;
+        // Uso de variables camelCase
+        return Objects.equals(idUser, user.idUser) && Objects.equals(name, user.name) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && rol == user.rol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_user, name, lastname, email, password, rol);
+        return Objects.hash(idUser, name, lastname, email, password, rol);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id_user=" + id_user +
+                "idUser=" + idUser +
                 ", name='" + name + '\'' +
-                ", last_name='" + lastname + '\'' +
+                ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", rol=" + rol +
