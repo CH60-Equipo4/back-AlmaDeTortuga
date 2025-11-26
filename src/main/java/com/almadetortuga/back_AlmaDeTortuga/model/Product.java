@@ -1,8 +1,7 @@
-
 package com.almadetortuga.back_AlmaDeTortuga.model;
 
 import jakarta.persistence.*;
-        import java.math.BigDecimal;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,32 +14,30 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
-    private Long id_product;
+    @Column(name = "id_producto") // Se mantiene el nombre de la columna en la DB
+    private Long idProduct;       // CORREGIDO: id_product -> idProduct (CamelCase)
 
-    @Column(name = "name", nullable = false, length = 150)
+    @Column(name = "nombre_producto")
     private String name;
 
-    // text(1000) en DB se suele mapear con length grande o columnDefinition="TEXT"
-    @Column(name = "description", nullable = false, length = 1000)
+    @Column(name = "descripcion_producto")
     private String description;
 
-    // DECIMAL(10,2) siempre debe ser BigDecimal en Java
-    @Column(name = "price", nullable = false, precision = 10, scale = 2)
+    @Column(name = "precio")
     private BigDecimal price;
 
-    @Column(name = "STOCK", nullable = false)
+    @Column(name = "stock")
     private Integer stock;
 
-    @Column(name = "urlProductImage", nullable = false, length = 250)
+    @Column(name = "url_imagen_producto")
     private String urlProductImage;
 
-    // -------- Relación de Product a Cart 1:N ----------
+    // -------- Relación de Product a Cart N:M ----------
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cart> carts = new ArrayList<>();
+    @ManyToMany(mappedBy = "products")
+    private List<Cart> carts = new ArrayList<>(); // Es buena práctica inicializar la lista
 
-    // -------- Relación de Product a Pedido N:M ----------
+    // -------- Relación de Product a Pedido (Order) N:M ----------
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -55,8 +52,9 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id_product, String name, String description, BigDecimal price, Integer stock, String urlProductImage, List<Cart> carts, Set<Order> orders) {
-        this.id_product = id_product;
+    // Constructor actualizado con camelCase
+    public Product(Long idProduct, String name, String description, BigDecimal price, Integer stock, String urlProductImage, List<Cart> carts, Set<Order> orders) {
+        this.idProduct = idProduct;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -68,12 +66,13 @@ public class Product {
 
     // -------- Getters y Setters ----------
 
-    public Long getId_product() {
-        return id_product;
+    public Long getIdProduct() {
+        return idProduct;
     }
 
-    public void setId_product(Long id_product) {
-        this.id_product = id_product;
+    // Setter corregido: setId_product -> setIdProduct
+    public void setIdProduct(Long idProduct) {
+        this.idProduct = idProduct;
     }
 
     public String getName() {
@@ -132,25 +131,31 @@ public class Product {
         this.orders = orders;
     }
 
-
     // -------- Overrides (Equals, HashCode, ToString) ----------
-
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Product product)) return false;
-        return Objects.equals(id_product, product.id_product) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(price, product.price) && Objects.equals(stock, product.stock) && Objects.equals(urlProductImage, product.urlProductImage) && Objects.equals(carts, product.carts) && Objects.equals(orders, product.orders);
+        // Se usan las nuevas variables en camelCase
+        return Objects.equals(idProduct, product.idProduct) &&
+                Objects.equals(name, product.name) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(price, product.price) &&
+                Objects.equals(stock, product.stock) &&
+                Objects.equals(urlProductImage, product.urlProductImage) &&
+                Objects.equals(carts, product.carts) &&
+                Objects.equals(orders, product.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_product, name, description, price, stock, urlProductImage, carts, orders);
+        return Objects.hash(idProduct, name, description, price, stock, urlProductImage, carts, orders);
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "id_product=" + id_product +
+                "idProduct=" + idProduct +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +

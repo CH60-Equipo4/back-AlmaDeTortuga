@@ -37,11 +37,11 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
 
         // Actualizar los campos
-        product.setNombreProducto(updatedProduct.getNombreProducto());
-        product.setDescripcionProducto(updatedProduct.getDescripcionProducto());
-        product.setPrecio(updatedProduct.getPrecio());
+        product.setName(updatedProduct.getName());
+        product.setDescription(updatedProduct.getDescription());
+        product.setPrice(updatedProduct.getPrice());
         product.setStock(updatedProduct.getStock());
-        product.setUrlImagenProducto(updatedProduct.getUrlImagenProducto());
+        product.setUrlProductImage(updatedProduct.getUrlProductImage());
 
         return productRepository.save(product);
     }
