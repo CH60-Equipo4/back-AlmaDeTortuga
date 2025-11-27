@@ -1,12 +1,15 @@
 package com.almadetortuga.back_AlmaDeTortuga.service;
 
+import com.almadetortuga.back_AlmaDeTortuga.model.Category;
 import com.almadetortuga.back_AlmaDeTortuga.model.CustomProduct;
 import com.almadetortuga.back_AlmaDeTortuga.model.Product;
 import com.almadetortuga.back_AlmaDeTortuga.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -61,7 +64,16 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    /* ToDo: actualizar el update para ver si es custom o nelson */
+    public List<Product> getProductsByCategory(Category category) {
+        return productRepository.findByCategory(category);
+    }
+
+    public List<Product> getTopProductsByCategory(Category category, Integer count) {
+        return productRepository.findByCategory(category)
+                .stream()
+                .limit(count)
+                .collect(Collectors.toList());
+    }
 
 
 }

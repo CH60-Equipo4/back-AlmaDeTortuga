@@ -28,8 +28,8 @@ public class UserService {
 
     // Crear un usuario
     public User createUser(User newUser){
-        String encryptedPassword = passwordEncoder.encode(newUser.getPassword());
-        newUser.setPassword(encryptedPassword);
+        //String encryptedPassword = passwordEncoder.encode(newUser.getPassword());
+        //newUser.setPassword(encryptedPassword);
         return userRepository.save(newUser);
     }
 
