@@ -4,6 +4,7 @@ import com.almadetortuga.back_AlmaDeTortuga.exceptions.UserNotFoundException;
 import com.almadetortuga.back_AlmaDeTortuga.model.User;
 import com.almadetortuga.back_AlmaDeTortuga.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     // Lista de usuarios
     public List<User> getUsers(){
         return userRepository.findAll();
@@ -24,6 +28,8 @@ public class UserService {
 
     // Crear un usuario
     public User createUser(User newUser){
+        String encryptedPassword = passwordEncoder.encode(newUser.getPassword());
+        newUser.setPassword(encryptedPassword);
         return userRepository.save(newUser);
     }
 
