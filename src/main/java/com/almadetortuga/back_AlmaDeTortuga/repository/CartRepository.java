@@ -13,8 +13,8 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     // Buscar carritos por el id del usuario (Propiedad 'user' -> propiedad 'idUser')
     List<Cart> findByUserIdUser(Long idUser);
 
-    // Buscar carritos por el id del producto (Propiedad 'products' -> propiedad 'idProduct')
-    List<Cart> findByProductsIdProduct(Long idProduct);
+    // Buscar carritos por el id del producto
+    List<Cart> findByItemsProductIdProduct(Long idProduct);
 
     // Buscar carritos por estado (Usa el tipo concreto StatusCart)
     List<Cart> findByStatusCart(StatusCart statusCart);

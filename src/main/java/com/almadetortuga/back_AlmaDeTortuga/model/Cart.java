@@ -1,6 +1,7 @@
 package com.almadetortuga.back_AlmaDeTortuga.model;
 
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,14 +33,8 @@ public class Cart {
         this.user = user;
     }
 
-    // Relación Cart to Product N:M
-    @ManyToMany
-    @JoinTable(
-            name = "cart_product",
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> items = new ArrayList<>();
 
     public Cart() {
     }
@@ -65,12 +60,12 @@ public class Cart {
         this.statusCart = statusCart;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<CartItem> getItems() {
+        return items;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setItems(List<CartItem> items) {
+        this.items = items;
     }
 
     @Override

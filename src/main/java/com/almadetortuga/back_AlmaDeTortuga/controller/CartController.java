@@ -1,5 +1,6 @@
 package com.almadetortuga.back_AlmaDeTortuga.controller;
 
+import com.almadetortuga.back_AlmaDeTortuga.dto.CartItemRequestDTO;
 import com.almadetortuga.back_AlmaDeTortuga.model.Cart;
 import com.almadetortuga.back_AlmaDeTortuga.service.CartService;
 import org.springframework.http.ResponseEntity;
@@ -48,15 +49,26 @@ public class CartController {
         return ResponseEntity.noContent().build();
     }
 
-    // Agregar producto al carrito
-    @PostMapping("/{cartId}/products/{productId}")
-    public ResponseEntity<Cart> addProductToCart(@PathVariable Long cartId, @PathVariable Long productId) {
-        return ResponseEntity.ok(cartService.addProductToCart(cartId, productId));
+    //Agregar un nuevo producto al carrito
+    @PostMapping("/{cartId}/items")
+    public ResponseEntity<Cart> addItemToCart(@PathVariable Long cartId, @RequestBody CartItemRequestDTO itemDto) {
+        Cart updatedCart = cartService.addItemToCart(cartId, itemDto);
+        // Devuelve el carrito completo actualizado para que el frontend lo use
+        return ResponseEntity.ok(updatedCart);
     }
 
-    // Quitar producto del carrito
-    @DeleteMapping("/{cartId}/products/{productId}")
-    public ResponseEntity<Cart> removeProductFromCart(@PathVariable Long cartId, @PathVariable Long productId) {
-        return ResponseEntity.ok(cartService.removeProductFromCart(cartId, productId));
+    // eliminar un carrito
+    @DeleteMapping("/items/{cartItemId}")
+    public ResponseEntity<Void> removeItemFromCart(@PathVariable Long cartItemId) {
+        cartService.removeItemFromCart(cartItemId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/items/{cartItemId}/decrement")
+    public ResponseEntity<Cart> decrementItemQuantity(@PathVariable Long cartItemId,
+                                                      @RequestParam(defaultValue = "1") int quantity) {
+        // Usamos PUT para reflejar que estamos modificando el estado del CartItem.
+        Cart updatedCart = cartService.decrementItemQuantity(cartItemId, quantity);
+        return ResponseEntity.ok(updatedCart);
     }
 }

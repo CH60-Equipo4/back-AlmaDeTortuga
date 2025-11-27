@@ -37,11 +37,6 @@ public class Product {
     @Column(name = "category")
     private Category category;
 
-    // -------- Relación de Product a Cart N:M ----------
-
-    @ManyToMany(mappedBy = "products")
-    private List<Cart> carts = new ArrayList<>();
-
     // -------- Relación de Product a Pedido (Order) N:M ----------
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
