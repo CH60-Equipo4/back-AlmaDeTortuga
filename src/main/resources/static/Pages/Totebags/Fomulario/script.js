@@ -54,7 +54,7 @@ async function crearProductoEnBackend(productoData) {
         console.error('Error de conexión:', error);
         return {
             success: false,
-            message: 'No se pudo conectar con el servidor. Verifica que esté corriendo en http://18.223.164.92:8080'
+            message: 'No se pudo conectar con el servidor. Verifica que esté corriendo en http://localhost:8080'
         };
     }
 }
