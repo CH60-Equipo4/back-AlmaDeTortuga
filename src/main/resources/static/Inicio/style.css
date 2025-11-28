@@ -1,0 +1,855 @@
+:root {
+  /* Color palette for Alma de Tortuga */
+  --color-primary: #818E59;
+  --color-secondary: #283429;
+  --color-accent-light: #FFEDCC;
+  --color-accent-lighter: #FEF7EA;
+  --color-accent-gold: #D09559;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-boton: #818E59;
+  --color-acento: #818E59;
+  --color-texto: #283429;
+  --color-fondo: #FEF7EA;
+  --color-nav: #FFEDCC;
+
+  /* Font families */
+  --font-heading: 'Poltawski Nowy', serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
+/* ---------------------------------------------------- */
+/* --- ESTILOS PARA EL SLIDER / SECCIÓN HERO --- */
+/* ---------------------------------------------------- */
+
+.slider-container {
+  width: 100%;
+  height: 500px;
+  background-color: var(--color-fondo);
+  padding: 2rem 0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.7s ease-in-out;
+  width: 100%;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-hero,
+.slide-customize,
+.slide-classic,
+.slide-christmas {
+  /* Incluimos christmas para consistencia */
+  background: var(--color-fondo);
+}
+
+.hero-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  gap: 4rem;
+  padding: 2rem 6rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Regla para centrar el contenido en slides de dos columnas (Descuento/Clásico) */
+.slide-christmas .center-content,
+.slide-classic .center-content {
+  display: flex;
+  justify-content: space-between;
+  /* CORRECCIÓN: Centrar verticalmente */
+  align-items: center;
+  height: 100%;
+  gap: 4rem;
+  padding: 2rem 6rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+
+.hero-text,
+.left-col {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  text-align: left;
+}
+
+.hero-text h1,
+.slide-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  color: var(--color-secondary);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.hero-text p,
+.slide-subtitle {
+  font-family: var(--font-body);
+  color: var(--color-texto);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.highlight {
+  color: var(--color-primary);
+}
+
+.highlight-text {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.btn-explore {
+  background-color: var(--color-boton);
+  color: var(--color-white);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-explore:hover {
+  background-color: var(--color-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(129, 142, 89, 0.3);
+}
+
+.hero-image {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.image-container {
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+.placeholder-bag {
+  width: clamp(250px, 40vw, 380px);
+  height: clamp(250px, 40vw, 380px);
+  background-color: var(--color-accent-light);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.placeholder-bag img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.badge-special {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-accent-light);
+  color: var(--color-primary);
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.badge-special i {
+  color: var(--color-accent-gold);
+}
+
+
+/* --- ANIMACIONES --- */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* ---------------------------------------------------- */
+/* --- SLIDE CUSTOMIZE (Diseño en Grid) --- */
+/* ---------------------------------------------------- */
+
+.slide-customize .center-content {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  grid-template-rows: auto auto 1fr;
+  /* 1fr para estirar la última fila (donde va el botón) */
+  gap: 20px 30px;
+  align-items: start;
+  justify-items: start;
+  height: 100%;
+  padding: 4rem 6rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  /* CORRECCIÓN: Distribuir el espacio verticalmente dentro del contenedor */
+  align-content: space-between;
+}
+
+.slide-customize .slide-title {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.slide-customize .slide-subtitle {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.slide-customize .btn-customize {
+  grid-column: 1;
+  grid-row: 3;
+  width: 100%;
+  max-width: 300px;
+  /* CORRECCIÓN: Forzar el botón al final de la fila estirada */
+  align-self: end;
+  /* Se elimina el margin-top para que align-self funcione mejor */
+  margin-top: 0;
+
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.slide-customize .btn-customize:hover {
+  background-color: var(--color-secondary);
+}
+
+.slide-customize .steps-grid {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.step-card {
+  background: var(--color-white);
+  border-radius: 20px;
+  padding: 1.5rem;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--color-primary);
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.step-card:nth-child(2) {
+  border-left-color: var(--color-accent-gold);
+}
+
+.step-card:nth-child(3) {
+  border-left-color: var(--color-secondary);
+}
+
+.step-card:nth-child(4) {
+  border-left-color: var(--color-accent-light);
+}
+
+.step-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+  font-size: 1.8rem;
+  color: var(--color-white);
+  background-color: var(--color-primary);
+}
+
+.step-card:nth-child(2) .step-icon {
+  background-color: var(--color-accent-gold);
+}
+
+.step-card:nth-child(3) .step-icon {
+  background-color: var(--color-secondary);
+}
+
+.step-card:nth-child(4) .step-icon {
+  background-color: var(--color-accent-light);
+}
+
+
+.step-number {
+  display: inline-block;
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.step-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.step-description {
+  font-size: 0.95rem;
+  color: var(--color-texto);
+  opacity: 0.8;
+}
+
+/* ---------------------------------------------------- */
+/* --- CONTROLES Y DOTS DEL SLIDER --- */
+/* ---------------------------------------------------- */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--color-secondary);
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.nav-button:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.nav-button.prev {
+  left: 20px;
+}
+
+.nav-button.next {
+  right: 20px;
+}
+
+.dots-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.dot {
+  height: 8px;
+  /* Mantén una altura pequeña */
+  width: 25px;
+  /* ¡Aumenta el ancho para hacerlo rectangular! */
+  background-color: #bbb;
+  /* Color inactivo, puedes usar un --var si lo tienes */
+  border-radius: 4px;
+  /* Un radio pequeño para esquinas ligeramente redondeadas, o 0 para esquinas vivas */
+  display: inline-block;
+  margin: 0 4px;
+  /* Ajusta el margen para la nueva forma */
+  cursor: pointer;
+  transition: background-color 0.3s ease, width 0.3s ease;
+  /* Agrega transición para el ancho si quieres animación */
+  border: none;
+  /* Asegúrate de que no tenga borde predeterminado de botón */
+  padding: 0;
+  /* Elimina padding predeterminado de botón */
+}
+
+.dot.active {
+  background-color: var(--color-principal);
+  /* Utiliza tu color principal para el activo, o un color oscuro */
+  width: 35px;
+  /* Opcional: haz que el rectángulo activo sea un poco más largo */
+}
+
+/* Si usas variables CSS, ajusta los colores según tu paleta */
+:root {
+  --color-principal: #818e59;
+  /* Ejemplo, usa tu color principal */
+  --color-inactivo: #bbb;
+}
+
+.dot {
+  background-color: var(--color-inactivo);
+}
+
+.dot.active {
+  background-color: var(--color-principal);
+}
+
+
+/* ------------------------------------------------ */
+/* --- SECCIONES DE CONTENIDO GENERAL (AJUSTES) --- */
+/* ------------------------------------------------ */
+
+.title-comprado,
+.title-blog {
+  font-family: var(--font-heading);
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-secondary);
+  margin-top: 3rem;
+}
+
+.line {
+  width: 150px;
+  height: 4px;
+  background-color: var(--color-primary);
+  margin: 0.5rem auto 2rem;
+  border-radius: 2px;
+}
+
+.producto-card {
+  border: none;
+  background-color: var(--color-white);
+  overflow: hidden;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.producto-card .card-img-top {
+  height: 250px;
+  object-fit: cover;
+}
+
+.product-name {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+}
+
+.product-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-accent-gold);
+  margin-bottom: 1rem;
+}
+
+.add-to-cart-btn {
+  background-color: var(--color-boton);
+  border-color: var(--color-boton);
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+.add-to-cart-btn:hover {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+/* --- BANNER INFO / CAUSA --- */
+.banner-info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem 1rem;
+  background-color: var(--color-accent-light);
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.banner-top {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed rgba(40, 52, 41, 0.2);
+}
+
+.banner-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-texto);
+  max-width: 150px;
+}
+
+.banner-item i,
+.banner-item-center i {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+}
+
+.banner-item-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-bottom {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.banner-bottom p {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  letter-spacing: 1px;
+}
+
+/* --- SECCIÓN BLOG (Tarjetas de contenido) --- */
+.blog-section .card {
+  border: 1px solid rgba(40, 52, 41, 0.1);
+  transition: all 0.3s ease;
+}
+
+.blog-section .card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 10px 20px rgba(129, 142, 89, 0.15) !important;
+}
+
+/* ----------------------------- */
+/* --- Responsive Adjustments --- */
+/* ----------------------------- */
+
+@media (max-width: 992px) {
+
+  .hero-content,
+  .slide-customize .center-content,
+  /* Asegurar que las correcciones se apliquen en tablet */
+  .slide-christmas .center-content,
+  .slide-classic .center-content {
+    padding: 2rem 4rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+    /* Centrado en columna */
+    align-items: center;
+  }
+
+  /* Ajuste específico para el slide de Personalizar en tablet */
+  .slide-customize .center-content {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto 1fr;
+    padding: 2rem;
+  }
+
+  .hero-text,
+  .left-col,
+  .hero-image {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-image {
+    justify-content: center;
+  }
+
+  .slide-customize .slide-title,
+  .slide-customize .slide-subtitle,
+  .slide-customize .btn-customize {
+    grid-column: 1;
+    text-align: center;
+    align-items: center;
+    padding-left: 0;
+  }
+
+  /* Restaurar el margen inferior en móvil/tablet para separación */
+  .slide-customize .btn-customize {
+    max-width: 100%;
+    margin-top: 1rem;
+    align-self: unset;
+  }
+
+  .slide-customize .steps-grid {
+    grid-column: 1;
+    grid-row: 4;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 15px;
+  }
+
+  .nav-button {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .slider-container {
+    height: 450px;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text p {
+    font-size: 0.9rem;
+  }
+
+  .banner-top {
+    flex-direction: column;
+    gap: 1rem;
+    border-bottom: none;
+  }
+
+  .banner-bottom p {
+    font-size: 1.1rem;
+  }
+
+  .slide-customize .steps-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+}
+
+/* ------------------------------------------------ */
+/* --- NUEVA SECCIÓN: OPINIONES Y RESEÑAS --- */
+/* ------------------------------------------------ */
+
+.review-section {
+  background-color: var(--color-accent-lighter);
+  /* Fondo Crema Claro */
+  margin-top: 3rem;
+}
+
+.title-reviews {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.review-section .line {
+  /* Reutilizamos el estilo de línea para el título */
+  margin-bottom: 3rem;
+}
+
+/* Contenedor de la Tarjeta (para centrarla en el carrusel) */
+.review-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  /* Altura mínima para que no salte */
+}
+
+.review-card {
+  background-color: var(--color-white);
+  max-width: 650px;
+  width: 90%;
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  text-align: left;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 1.5rem;
+}
+
+/* ÍCONO DEL REVIEWS (Tortuga) */
+.reviewer-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--color-accent-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  /* Pequeño padding para que la imagen respire */
+  overflow: hidden;
+}
+
+/* Regla para la imagen SVG o PNG que cargues desde Cloudinary */
+.reviewer-icon .turtle-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Asegura que la imagen se vea completa dentro del círculo */
+}
+
+.reviewer-name {
+  font-weight: 700;
+  color: var(--color-secondary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Estrellas */
+.stars i {
+  color: var(--color-accent-gold);
+  /* Estrellas Doradas */
+  font-size: 1rem;
+  margin-right: 2px;
+}
+
+.review-text {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-texto);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.review-product {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Carrusel Controls */
+.review-section .carousel-control-prev-icon,
+.review-section .carousel-control-next-icon {
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+.review-section .carousel-indicators button {
+  background-color: var(--color-primary);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 4px;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .review-card {
+    padding: 1.5rem;
+  }
+
+  .review-card-container {
+    min-height: 350px;
+    /* Más alto en móvil para que el texto quepa */
+  }
+}
+
+/* --- AÑADIR ESTA REGLA A TU CSS (style.css) --- */
+.slide-classic .card-collection {
+  /* Establece un ancho máximo para el contenedor de la imagen en este slide */
+  max-width: 380px;
+  height: 380px;
+  /* Tamaño cuadrado fijo */
+  display: flex;
+  /* Para centrar la imagen dentro si es necesario */
+  justify-content: center;
+  align-items: center;
+  /* Estilo adicional si quieres que el contenedor tenga un fondo visible */
+  background-color: var(--color-accent-light);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  animation: float 3s ease-in-out infinite;
+  /* Reutilizamos tu animación */
+}
+
+.slide-classic .card-collection .card-image,
+.slide-classic .card-collection .card-image img {
+  /* Asegura que la imagen ocupe el 100% del contenedor fijo sin desbordarse */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Recorta la imagen si es necesario para llenar el espacio */
+  border-radius: 20px;
+}
+
+.slide-christmas .card-collection {
+  max-width: 380px;
+  /* Tamaño máximo del contenedor de la imagen */
+  height: 380px;
+  /* Altura fija para hacerlo cuadrado */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-accent-light);
+  /* Puedes ajustar el color de fondo */
+  border-radius: 20px;
+  overflow: hidden;
+  /* Muy importante para recortar la imagen si desborda */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  animation: float 3s ease-in-out infinite;
+  /* Si usas la animación 'float' */
+}
+
+.slide-christmas .card-collection .card-image,
+.slide-christmas .card-collection .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Esto es clave: la imagen cubrirá el área sin distorsionarse */
+  border-radius: 20px;
+}
